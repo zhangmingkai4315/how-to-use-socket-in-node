@@ -1,0 +1,37 @@
+ <!DOCTYPE html>
+<html>
+<head>
+	<title>SOCKET.IO DYNAMICALLY RELOAD CSS STYLESHEET</title>
+	<link rel="stylesheet" type="text/css" href="/header.css">
+	<link rel="stylesheet" type="text/css" href="/styles.css">
+	<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+	<script type="text/javascript">
+	window.onload=function(){
+		var socket=io.connect();
+		socket.on('reload',function(){
+			window.location.reload();
+		});
+		socket.on('stylesheet',function(sheet){
+
+			var link=document.createElement('link');
+			var head=document.getElementsByTagName('head')[0];
+			link.setAttribute('rel','stylesheet');
+			link.setAttribute('type,',"text/css");
+			link.setAttribute('href', sheet);
+			head.appendChild(link);
+		});
+	}
+
+	</script>
+</head>
+<body>
+<h1>This is our awesome webpage!
+</h1>
+<div id="body">
+	<p>if this file(<code>index.html</code>)is edited!,then the server will send a messafe to the browser using socket io telling it to refrsh the page!</p>
+    <hr>
+     <p>if this file(<code>header.css</code>or <code>style.css</code>)is edited!,then the server will send a messafe to the browser using socket io dynamically reload  it to refrsh the page!</p>
+</div>
+<div id="event-log"></div>
+</body>
+</html>
